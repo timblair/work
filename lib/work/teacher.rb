@@ -7,10 +7,10 @@ module Work
 
     attr_accessor :path, :domains, :ip
 
-    def initialize(domains, path=nil, ip=nil)
+    def initialize(domains, ip=nil, path=nil)
       @domains = domains
+      @ip = ip || Work::DEFAULT_IP
       @path = path || "/etc/hosts"
-      @ip = ip || "127.0.0.1"
       raise HostsFileNotWritable if !File.writable?(@path)
     end
 

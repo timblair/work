@@ -4,6 +4,7 @@ require 'work/dotfile'
 
 module Work
 
+  DEFAULT_IP = "127.0.0.1"
   DEFAULT_DOMAINS = %w{
     arstechnica.com boingboing.net cnet.com codinghorror.com crunchgear.com
     daringfireball.net digg.com en.wikipedia.org engadget.com engadgetmobile.com

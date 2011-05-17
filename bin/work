@@ -16,22 +16,20 @@ end
 # Find the location of the user's work preferences.
 dotfile = Work::DotFile.locate
 
-case ARGV.first
 # We need a list of domains to work with, which is stored in a
 # ~/.work hidden file.
-when 'setup'
-  dotfile = Work::DotFile.locate
+if ARGV.first == 'setup'
   if dotfile.exists?
     puts "Work file already exists at #{dotfile.path}"
   else
-    dotfile.write(Work::DEFAULT_DOMAINS) if !dotfile.exists?
+    dotfile.write!
     puts "Default work domains added to #{dotfile.path}"
   end
 
 # Not a setup command, so we'll need the `Teacher`
 else
   # Warn the user if they've not set up a domains list
-  if dotfile.read.length == 0
+  if dotfile.domains.length == 0
     puts "Domain list is empty.  Add work domains to #{dotfile.path}"
     puts "or run `#{$0} setup` to populate with the default list."
     exit
@@ -39,7 +37,7 @@ else
 
   # If we can't write to the hosts file, re-run but with `sudo`.
   begin
-    p = Work::Teacher.new(dotfile.read, ARGV[1], ARGV[2])
+    p = Work::Teacher.new(dotfile.domains, dotfile.ip)
   rescue Work::HostsFileNotWritable
     sudome
   end
@@ -54,6 +52,9 @@ else
     p.play
   else
     puts "Bums on seats, please."
+    # Clear out any old data in case the domain list or IP address has
+    # been updated and we're just running `work` again without a `play`.
+    p.play
     p.work
   end
 
