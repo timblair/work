@@ -1,0 +1,59 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib')
+require 'playtime'
+
+# Due to access permissions (i.e. the hosts file isn't usually
+# writable to the current user, we need the ability to re-run
+# this process under the super user.
+def sudome
+  if ENV["USER"] != "root"
+    # `exec` replaces this process, so no need to `exit` as well.
+    exec("sudo #{$0} #{ARGV.join(' ')}")
+  end
+end
+
+# Find the location of the user's playtime preferences.
+dotfile = PlayTime::DotFile.locate
+
+case ARGV.first
+# We need a list of domains to work with, which is stored in a
+# ~/.playtime hidden file.
+when 'setup'
+  dotfile = PlayTime::DotFile.locate
+  if dotfile.exists?
+    puts "Playtime file already exists at #{dotfile.path}"
+  else
+    dotfile.write(PlayTime::DEFAULT_DOMAINS) if !dotfile.exists?
+    puts "Default playtime domains added to #{dotfile.path}"
+  end
+
+# Not a setup command, so we'll need the `Teacher`
+else
+  # Warn the user if they've not set up a domains list
+  if dotfile.read.length == 0
+    puts "Domain list is empty.  Add playtime domains to #{dotfile.path}"
+    puts "or run `#{$0} setup` to populate with the default list."
+    exit
+  end
+
+  # If we can't write to the hosts file, re-run but with `sudo`.
+  begin
+    p = PlayTime::Teacher.new(dotfile.read, ARGV[1], ARGV[2])
+  rescue PlayTime::HostsFileNotWritable
+    sudome
+  end
+
+  # Decide if we're beginning or ending playtime.
+  case ARGV.first
+  when 'start', 'begin', 'go', 'play', 'on'
+    puts "Out in to the playground, children."
+    p.play
+  else
+    puts "Bums on seats, please."
+    p.work
+  end
+
+  # Run the command to reload the machine's DNS cache.
+  p.recache!
+end
