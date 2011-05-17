@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__) + '/../lib')
-require 'playtime'
+require 'work'
 
 # Due to access permissions (i.e. the hosts file isn't usually
 # writable to the current user, we need the ability to re-run
@@ -13,40 +13,43 @@ def sudome
   end
 end
 
-# Find the location of the user's playtime preferences.
-dotfile = PlayTime::DotFile.locate
+# Find the location of the user's work preferences.
+dotfile = Work::DotFile.locate
 
 case ARGV.first
 # We need a list of domains to work with, which is stored in a
-# ~/.playtime hidden file.
+# ~/.work hidden file.
 when 'setup'
-  dotfile = PlayTime::DotFile.locate
+  dotfile = Work::DotFile.locate
   if dotfile.exists?
-    puts "Playtime file already exists at #{dotfile.path}"
+    puts "Work file already exists at #{dotfile.path}"
   else
-    dotfile.write(PlayTime::DEFAULT_DOMAINS) if !dotfile.exists?
-    puts "Default playtime domains added to #{dotfile.path}"
+    dotfile.write(Work::DEFAULT_DOMAINS) if !dotfile.exists?
+    puts "Default work domains added to #{dotfile.path}"
   end
 
 # Not a setup command, so we'll need the `Teacher`
 else
   # Warn the user if they've not set up a domains list
   if dotfile.read.length == 0
-    puts "Domain list is empty.  Add playtime domains to #{dotfile.path}"
+    puts "Domain list is empty.  Add work domains to #{dotfile.path}"
     puts "or run `#{$0} setup` to populate with the default list."
     exit
   end
 
   # If we can't write to the hosts file, re-run but with `sudo`.
   begin
-    p = PlayTime::Teacher.new(dotfile.read, ARGV[1], ARGV[2])
-  rescue PlayTime::HostsFileNotWritable
+    p = Work::Teacher.new(dotfile.read, ARGV[1], ARGV[2])
+  rescue Work::HostsFileNotWritable
     sudome
   end
 
-  # Decide if we're beginning or ending playtime.
-  case ARGV.first
-  when 'start', 'begin', 'go', 'play', 'on'
+  # Decide if we're beginning or ending work.
+  cmd = File.basename($0)
+  action = ARGV.first || 'on'
+
+  if (cmd == 'play' && %{ start on begin }.include?(action)) ||
+     (cmd != 'play' && %{ stop off end }.include?(action))
     puts "Out in to the playground, children."
     p.play
   else

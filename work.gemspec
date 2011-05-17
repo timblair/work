@@ -1,18 +1,18 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path('../lib', __FILE__)
-require 'playtime/version'
+require 'work/version'
 
 Gem::Specification.new do |s|
-  s.name        = 'playtime'
-  s.version     = PlayTime::VERSION
+  s.name        = 'work'
+  s.version     = Work::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ['Tim Blair']
   s.email       = ['tim@bla.ir']
-  s.homepage    = 'https://github.com/timblair/playtime'
+  s.homepage    = 'https://github.com/timblair/work'
   s.summary     = 'Anti-procrastination via hosts file manipulation.'
   s.description = 'Anti-procrastination via hosts file manipulation.'
 
-  s.rubyforge_project = 'playtime'
+  s.rubyforge_project = 'work'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

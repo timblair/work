@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PlayTime do
+describe Work do
 
   it "should do stuff" do
     1.should == 1

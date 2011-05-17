@@ -31,7 +31,7 @@ end
 # Misc.
 #
 
-desc "Start an irb console with PlayTime pre-loaded."
+desc "Start an irb console with Work pre-loaded."
 task :console do
   exec "irb -r spec/spec_helper"
 end

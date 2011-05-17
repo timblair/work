@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    playtime (0.0.1)
+    work (0.1.0)
       sys-uname (>= 0.8.5)
 
 GEM
@@ -23,6 +23,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  playtime!
   rspec (>= 2.5.0)
+  work!
   yard (>= 0.6.4)

@@ -1,20 +1,25 @@
-# Playtime
+# Work
 
 Anti-procrastination through `hosts` file hackery.
 
 
 ## Installation
 
-    $ gem install playtime
+    $ gem install work
 
 
 ## Usage ##
 
-    $ playtime setup      # => sets up default domain list in ~/.playtime
-    $ playtime start      # => enables access to domain list
-    $ playtime [stop]     # => disables access to domain list
+    $ work setup      # => sets up default domain list in ~/.work
+    $ work [start]    # => disables access to domain list
+    $ work stop       # => enables access to domain list
 
-You can modify your list of playtime-only domains in `~/.playtime`.  Just
+There is also a `play` alias place which inverses the `work` commands:
+
+    $ play [start]    # => enables access to domain list
+    $ play stop       # => disables access to domain list
+
+You can modify your list of work-only domains in `~/.work`.  Just
 use the root domain (`www.` will be added automatically.)
 
 
@@ -30,6 +35,6 @@ Ideas and motivation prompted by:
 
 Copyright (c)2011 [Tim Blair](http://tim.bla.ir/).
 
-Playtime has been released under the MIT license as detailed in the
+Work has been released under the MIT license as detailed in the
 LICENSE file that should be distributed with this library; the source code is
-[freely available](http://github.com/timblair/playtime).
+[freely available](http://github.com/timblair/work).

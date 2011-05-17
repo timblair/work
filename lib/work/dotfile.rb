@@ -1,10 +1,10 @@
-module PlayTime
+module Work
   class DotFile
 
     attr_accessor :path
 
     def self.locate
-      @dotfile ||= self.new File.expand_path(File.join('~', '.playtime'))
+      @dotfile ||= self.new File.expand_path(File.join('~', '.work'))
     end
 
     def initialize(path)

@@ -1,8 +1,8 @@
-require 'playtime/version'
-require 'playtime/teacher'
-require 'playtime/dotfile'
+require 'work/version'
+require 'work/teacher'
+require 'work/dotfile'
 
-module PlayTime
+module Work
 
   DEFAULT_DOMAINS = %w{
     arstechnica.com boingboing.net cnet.com codinghorror.com crunchgear.com

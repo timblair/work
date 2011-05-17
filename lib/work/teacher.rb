@@ -2,7 +2,7 @@ require 'digest/md5'
 require 'rubygems'
 require 'sys/uname'
 
-module PlayTime
+module Work
   class Teacher
 
     attr_accessor :path, :domains, :ip
@@ -19,7 +19,7 @@ module PlayTime
     end
 
     def msg
-      "# Do not modify.  Controlled by Playtime: http://github.com/timblair/playtime"
+      "# Do not modify.  Controlled by Work: http://github.com/timblair/work"
     end
 
     def work
@@ -67,4 +67,4 @@ module PlayTime
     end
 
   end # Class Teacher
-end # Module PlayTime
+end # Module Work
