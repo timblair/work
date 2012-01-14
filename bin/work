@@ -9,7 +9,13 @@ require 'work'
 def sudome
   if ENV["USER"] != "root"
     # `exec` replaces this process, so no need to `exit` as well.
-    exec("sudo #{$0} #{ARGV.join(' ')}")
+    dotfile = Work::DotFile.locate
+    
+    if dotfile.exists? and dotfile.rvm
+      exec("rvmsudo #{$0} #{ARGV.join(' ')}")
+    else
+      exec("sudo #{$0} #{ARGV.join(' ')}")
+    end
   end
 end
 
@@ -23,7 +29,7 @@ if ARGV.first == 'setup'
     puts "Work file already exists at #{dotfile.path}"
   else
     dotfile.write!
-    puts "Default work domains added to #{dotfile.path}"
+    puts "Default work domains added to #{dotfile.path}. Remember to the rvm configuration if you're running that!"
   end
 
 # Not a setup command, so we'll need the `Teacher`
