@@ -22,5 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'sys-uname', '>= 0.8.5'
 
   s.add_development_dependency 'rspec', '>= 2.5.0'
-  s.add_development_dependency 'yard', '>= 0.6.4'
+  s.add_development_dependency 'rake'
+  # s.add_development_dependency 'yard', '~> 0.7.0'
 end

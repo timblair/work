@@ -14,6 +14,7 @@ module Work
     news.ycombinator.com nytimes.com radar.oreilly.com readwriteweb.com
     reddit.com techcrunch.com techmeme.com torrentfreak.com tuaw.com
     tweetmeme.com venturebeat.com wired.com youtube.com zdnet.com zenhabits.net
+    twitter.com
   }
 
   class HostsFileNotWritable < StandardError; end

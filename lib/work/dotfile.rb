@@ -3,7 +3,7 @@ require 'yaml'
 module Work
   class DotFile
 
-    attr_accessor :path, :ip, :domains
+    attr_accessor :path, :ip, :domains, :rvm
     attr_writer :ip, :domains
 
     def self.locate
@@ -31,13 +31,19 @@ module Work
       if exists?
         data = YAML.load_file(path)
         self.ip = data["ip"] if data.has_key?("ip")
+        self.rvm = if data.has_key?("rvm")
+          data["rvm"] 
+        else
+          false
+        end
+        
         self.domains = data["domains"].sort if data.has_key?("domains")
       end
     end
 
     def write!
       File.open(path, 'w+') do |f|
-        f.write YAML::dump({ "ip" => ip, "domains" => domains })
+        f.write YAML::dump({ "ip" => ip, "rvm" => false, "domains" => domains })
       end
     end
 
